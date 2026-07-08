@@ -5,8 +5,8 @@ function ProductCard({ product }) {
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    alert(`${product.name} added to cart!`);
     addToCart(product);
+    alert(`${product.name} added to cart!`);
   };
 
   return (
@@ -16,11 +16,11 @@ function ProductCard({ product }) {
       </div>
 
       <Link
-        to={`/products/${product.id}`}
+        to={`/products/${product._id}`}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <img
-          src={product.image}
+          src={`http://localhost:5000${product.image}`}
           alt={product.name}
           style={styles.image}
         />
@@ -38,18 +38,14 @@ function ProductCard({ product }) {
       </div>
 
       <div style={styles.priceBox}>
-        <span style={styles.price}>
-          ₹{product.price}
-        </span>
+        <span style={styles.price}>₹{product.price}</span>
 
         <span style={styles.oldPrice}>
           ₹{product.originalPrice}
         </span>
       </div>
 
-      <p style={styles.delivery}>
-        ✓ Free Delivery
-      </p>
+      <p style={styles.delivery}>✓ Free Delivery</p>
 
       <button
         style={styles.button}
@@ -68,7 +64,6 @@ const styles = {
     borderRadius: "12px",
     padding: "20px",
     boxShadow: "0 3px 10px rgba(0,0,0,0.1)",
-    transition: "0.3s",
     cursor: "pointer",
   },
 

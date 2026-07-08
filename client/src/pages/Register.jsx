@@ -67,7 +67,7 @@ const styles = {
   container: {
     maxWidth: "450px",
     margin: "50px auto",
-    background: "#2574c3",
+    background: "#367106",
     padding: "30px",
     borderRadius: "8px",
     boxShadow: "0 0 10px rgba(0,0,0,0.1)",

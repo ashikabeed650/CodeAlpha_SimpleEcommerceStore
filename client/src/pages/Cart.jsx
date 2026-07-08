@@ -84,10 +84,13 @@ function Cart() {
           cart.map((item) => (
             <div key={item._id} style={styles.card}>
               <img
-                src={item.image}
-                alt={item.name}
-                style={styles.image}
-              />
+  src={`http://localhost:5000${item.image}`}
+  alt={item.name}
+  style={styles.image}
+  onError={(e) => {
+    e.target.src = "https://via.placeholder.com/140?text=No+Image";
+  }}
+/>
 
               <div style={styles.info}>
                 <h3>{item.name}</h3>

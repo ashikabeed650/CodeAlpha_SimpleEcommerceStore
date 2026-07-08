@@ -1,8 +1,24 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import products from "../data/product";
+import api from "../api/api";
 import ProductCard from "../components/ProductCard";
 
 function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await api.get("/products");
+        setProducts(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div style={styles.page}>
       {/* Hero */}
@@ -23,7 +39,6 @@ function Home() {
       </div>
 
       {/* Stats */}
-
       <section style={styles.stats}>
         <div style={styles.stat}>
           <h2>500+</h2>
@@ -47,7 +62,6 @@ function Home() {
       </section>
 
       {/* Categories */}
-
       <section style={styles.section}>
         <h2>Shop by Category</h2>
 
@@ -59,15 +73,14 @@ function Home() {
         </div>
       </section>
 
-      {/* Products */}
-
+      {/* Featured Products */}
       <section style={styles.section}>
         <h2>Featured Products</h2>
 
         <div style={styles.grid}>
-          {products.map((product) => (
+          {products.slice(0, 4).map((product) => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               product={product}
             />
           ))}
@@ -75,7 +88,6 @@ function Home() {
       </section>
 
       {/* Deals */}
-
       <section style={styles.section}>
         <h2>Today's Deals</h2>
 
@@ -98,7 +110,6 @@ function Home() {
       </section>
 
       {/* Why Choose */}
-
       <section style={styles.section}>
         <h2>Why Choose ShopEasy?</h2>
 
@@ -130,19 +141,14 @@ function Home() {
       </section>
 
       {/* Footer */}
-
       <footer style={styles.footer}>
         <h2>ShopEasy</h2>
 
         <p>Your One Stop Online Shopping Store.</p>
 
-        <p>
-          About | Contact | Privacy Policy
-        </p>
+        <p>About | Contact | Privacy Policy</p>
 
-        <p>
-          © 2026 ShopEasy. All Rights Reserved.
-        </p>
+        <p>© 2026 ShopEasy. All Rights Reserved.</p>
       </footer>
     </div>
   );
@@ -155,8 +161,7 @@ const styles = {
 
   banner: {
     height: "420px",
-    background:
-      "linear-gradient(135deg,#2874f0,#0f52ba)",
+    background: "linear-gradient(135deg,#2874f0,#0f52ba)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -192,7 +197,7 @@ const styles = {
   },
 
   stat: {
-    background: "black",
+    background: "#fff",
     textAlign: "center",
     padding: "25px",
     borderRadius: "10px",
@@ -211,7 +216,7 @@ const styles = {
   },
 
   category: {
-    background: "white",
+    background: "#fff",
     padding: "25px",
     textAlign: "center",
     fontSize: "20px",
@@ -234,8 +239,8 @@ const styles = {
   },
 
   dealCard: {
-    background: "#2874f0",
-    color: "white",
+    background: "#367beb",
+    color: "#fff",
     textAlign: "center",
     padding: "30px",
     borderRadius: "10px",
@@ -249,7 +254,7 @@ const styles = {
   },
 
   feature: {
-    background: "white",
+    background: "#fff",
     padding: "30px",
     textAlign: "center",
     borderRadius: "10px",
@@ -258,7 +263,7 @@ const styles = {
 
   footer: {
     background: "#172337",
-    color: "white",
+    color: "#fff",
     textAlign: "center",
     padding: "40px",
     marginTop: "40px",

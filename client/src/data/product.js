@@ -1,7 +1,7 @@
-import headphones from "../assets/headphones.jpg";
-import smartwatch from "../assets/smartwatch.jpg";
-import mouse from "../assets/mouse.jpg";
-import speaker from "../assets/speaker.jpg";
+image: "/images/headphones.jpg"
+image: "/images/smartwatch.jpg"
+image: "/images/mouse.jpg"
+image: "/images/speaker.jpg"
 
 const products = [
   {
@@ -15,7 +15,7 @@ const products = [
     rating: 4.5,
     reviews: 2154,
     stock: 12,
-    image: headphones,
+    image: "/images/headphones.jpg",
     description:
       "Premium wireless headphones with noise cancellation and long battery life.",
   },
@@ -30,7 +30,7 @@ const products = [
     rating: 4.3,
     reviews: 1876,
     stock: 18,
-    image: smartwatch,
+    image: "/images/smartwatch.jpg",
     description:
       "Track your fitness, heart rate, sleep and notifications with ease.",
   },
@@ -45,7 +45,7 @@ const products = [
     rating: 4.7,
     reviews: 3291,
     stock: 25,
-    image: mouse,
+    image: "/images/mouse.jpg",
     description:
       "RGB gaming mouse with adjustable DPI and ergonomic design.",
   },
@@ -60,7 +60,7 @@ const products = [
     rating: 4.4,
     reviews: 1643,
     stock: 15,
-    image: speaker,
+    image: "/images/speaker.jpg",
     description:
       "Portable Bluetooth speaker with deep bass and 12-hour battery.",
   },
