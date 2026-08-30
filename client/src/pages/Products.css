@@ -1,0 +1,14 @@
+.products {
+  padding: 30px 8%;
+}
+
+.products h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
