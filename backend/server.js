@@ -37,9 +37,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
-// Start Server
-const PORT = process.env.PORT || 5000;
+// Start the server everywhere except when Vercel imports the app as a function.
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`✅ Server Running on Port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`✅ Server Running on Port ${PORT}`);
+  });
+}
+
+export default app;

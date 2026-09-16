@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import api from "../api/api";
+import { API_ORIGIN } from "../api/api";
 
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
@@ -139,7 +140,7 @@ function Cart() {
           cart.map((item) => (
             <div key={item._id} style={styles.card}>
               <img
-                src={`http://localhost:5000${item.image}`}
+                src={`${API_ORIGIN}${item.image}`}
                 alt={item.name}
                 style={styles.image}
                 onError={(e) => {

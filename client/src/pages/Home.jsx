@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../api/api";
+import api, { API_ORIGIN } from "../api/api";
 import ProductCard from "../components/ProductCard";
 import "../components/Stats.css";
 
@@ -68,22 +68,22 @@ function Home() {
 
         <div style={styles.categories}>
           <a href="/products?category=Mobiles" style={styles.categoryCard} className="category-card">
-            <img src="http://localhost:5000/images/mobiles.jpg" alt="Mobiles" style={styles.catImage} />
+            <img src={`${API_ORIGIN}/images/mobiles.jpg`} alt="Mobiles" style={styles.catImage} />
             <div style={styles.catLabel}>Mobiles</div>
           </a>
 
           <a href="/products?category=Electronics" style={styles.categoryCard} className="category-card">
-            <img src="http://localhost:5000/images/electronics.jpg" alt="Electronics" style={styles.catImage} />
+            <img src={`${API_ORIGIN}/images/electronics.jpg`} alt="Electronics" style={styles.catImage} />
             <div style={styles.catLabel}>Electronics</div>
           </a>
 
           <a href="/products?category=Watches" style={styles.categoryCard} className="category-card">
-            <img src="http://localhost:5000/images/watches.jpg" alt="Watches" style={styles.catImage} />
+            <img src={`${API_ORIGIN}/images/watches.jpg`} alt="Watches" style={styles.catImage} />
             <div style={styles.catLabel}>Watches</div>
           </a>
 
           <a href="/products?category=Accessories" style={styles.categoryCard} className="category-card">
-            <img src="http://localhost:5000/images/accessories.jpg" alt="Accessories" style={styles.catImage} />
+            <img src={`${API_ORIGIN}/images/accessories.jpg`} alt="Accessories" style={styles.catImage} />
             <div style={styles.catLabel}>Accessories</div>
           </a>
         </div>
