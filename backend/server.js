@@ -37,6 +37,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
+// Vercel mounts api/index.js at /api and may strip that prefix before Express sees the request.
+app.use("/auth", authRoutes);
+app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
+
 // Start the server everywhere except when Vercel imports the app as a function.
 if (!process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;
