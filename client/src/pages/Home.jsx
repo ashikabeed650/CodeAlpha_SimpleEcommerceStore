@@ -67,25 +67,25 @@ function Home() {
         <h2>Shop by Category</h2>
 
         <div style={styles.categories}>
-          <a href="/products?category=Mobiles" style={styles.categoryCard} className="category-card">
+          <Link to="/products?category=Mobiles" style={styles.categoryCard} className="category-card">
             <img src={`${API_ORIGIN}/images/mobiles.jpg`} alt="Mobiles" style={styles.catImage} />
             <div style={styles.catLabel}>Mobiles</div>
-          </a>
+          </Link>
 
-          <a href="/products?category=Electronics" style={styles.categoryCard} className="category-card">
+          <Link to="/products?category=Electronics" style={styles.categoryCard} className="category-card">
             <img src={`${API_ORIGIN}/images/electronics.jpg`} alt="Electronics" style={styles.catImage} />
             <div style={styles.catLabel}>Electronics</div>
-          </a>
+          </Link>
 
-          <a href="/products?category=Watches" style={styles.categoryCard} className="category-card">
+          <Link to="/products?category=Watches" style={styles.categoryCard} className="category-card">
             <img src={`${API_ORIGIN}/images/watches.jpg`} alt="Watches" style={styles.catImage} />
             <div style={styles.catLabel}>Watches</div>
-          </a>
+          </Link>
 
-          <a href="/products?category=Accessories" style={styles.categoryCard} className="category-card">
+          <Link to="/products?category=Accessories" style={styles.categoryCard} className="category-card">
             <img src={`${API_ORIGIN}/images/accessories.jpg`} alt="Accessories" style={styles.catImage} />
             <div style={styles.catLabel}>Accessories</div>
-          </a>
+          </Link>
         </div>
       </section>
 
