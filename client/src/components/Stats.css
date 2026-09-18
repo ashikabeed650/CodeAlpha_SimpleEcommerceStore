@@ -34,7 +34,7 @@
   left: 22px;
   font-size: 64px;
   font-weight: 800;
-  color: rgba(16,24,40,0.06); /* faint background number */
+  color: rgba(30, 64, 175, 0.16); /* readable background number */
   margin: 0;
   letter-spacing: 1px;
   pointer-events: none;
@@ -51,7 +51,7 @@
 
 /* show the numeric summary as a more visible small number above the label on hover */
 .stat-card:hover .stat-number {
-  color: rgba(16,24,40,0.08);
+  color: rgba(30, 64, 175, 0.24);
 }
 
 @media (max-width: 640px) {
