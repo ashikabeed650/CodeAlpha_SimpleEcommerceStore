@@ -1,11 +1,15 @@
 import Navbar from "./components/Navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 function Layout() {
+  const location = useLocation();
+
   return (
     <>
       <Navbar />
-      <Outlet />
+      <main className="route-page" key={location.key}>
+        <Outlet />
+      </main>
     </>
   );
 }

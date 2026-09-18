@@ -11,7 +11,7 @@ function ProductCard({ product }) {
   };
 
   return (
-    <div style={styles.card}>
+    <div className="product-card" style={styles.card}>
       <div style={styles.discount}>
         {product.discount}% OFF
       </div>
