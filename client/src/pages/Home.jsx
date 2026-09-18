@@ -194,6 +194,7 @@ const styles = {
     fontWeight: 800,
     lineHeight: 1.05,
     maxWidth: "760px",
+    color: "#ffffff",
     textShadow: "0 8px 26px rgba(11,40,90,0.18)",
     letterSpacing: "0",
   },
