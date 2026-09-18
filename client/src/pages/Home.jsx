@@ -21,10 +21,10 @@ function Home() {
   }, []);
 
   return (
-    <div style={styles.page}>
+    <div style={styles.page} className="home-page">
       {/* Hero */}
-      <div style={styles.banner} className="hero-banner">
-        <div>
+      <div style={styles.banner} className="hero-banner home-hero">
+        <div className="hero-copy">
           <h1 style={styles.title} className="hero-title">🛍 Welcome to ShopEasy</h1>
 
           <p style={styles.subtitle} className="hero-subtitle">
@@ -40,30 +40,30 @@ function Home() {
       </div>
 
       {/* Stats */}
-      <section className="stats-section">
-        <div className="stat-card">
+      <section className="stats-section home-stats">
+        <div className="stat-card stat-card-1">
           <h2 className="stat-number">500+</h2>
           <p className="stat-label">Products</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card stat-card-2">
           <h2 className="stat-number">10K+</h2>
           <p className="stat-label">Happy Customers</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card stat-card-3">
           <h2 className="stat-number">24/7</h2>
           <p className="stat-label">Support</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card stat-card-4">
           <h2 className="stat-number">100%</h2>
           <p className="stat-label">Secure Payment</p>
         </div>
       </section>
 
       {/* Categories */}
-      <section style={styles.section}>
+      <section style={styles.section} className="home-section">
         <h2>Shop by Category</h2>
 
         <div style={styles.categories}>
@@ -90,7 +90,7 @@ function Home() {
       </section>
 
       {/* Featured Products */}
-      <section style={styles.section}>
+      <section style={styles.section} className="home-section">
         <h2>Featured Products</h2>
 
         <div style={styles.grid}>
@@ -104,7 +104,7 @@ function Home() {
       </section>
 
       {/* Deals */}
-      <section style={styles.section}>
+      <section style={styles.section} className="home-section">
         <h2>Today's Deals</h2>
 
         <div style={styles.deals}>
@@ -126,7 +126,7 @@ function Home() {
       </section>
 
       {/* Why Choose */}
-      <section style={styles.section}>
+      <section style={styles.section} className="home-section">
         <h2>Why Choose ShopEasy?</h2>
 
         <div style={styles.features}>
@@ -157,7 +157,7 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer style={styles.footer}>
+      <footer style={styles.footer} className="home-footer">
         <h2>ShopEasy</h2>
 
         <p>Your One Stop Online Shopping Store.</p>
@@ -172,47 +172,50 @@ function Home() {
 
 const styles = {
   page: {
-    background: "#f1f3f6",
+    background: "var(--bg)",
   },
 
   banner: {
-    height: "520px",
-    background: "linear-gradient(135deg,#2874f0,#0f52ba)",
+    minHeight: "540px",
+    backgroundImage: "linear-gradient(90deg, rgba(10, 27, 67, .92), rgba(10, 27, 67, .28)), url(https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1800&q=85)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     color: "white",
-    textAlign: "center",
-    padding: "40px 20px",
+    textAlign: "left",
+    padding: "64px clamp(28px, 8vw, 110px)",
   },
 
   title: {
-    fontSize: "64px",
+    fontSize: "clamp(42px, 6vw, 78px)",
     marginBottom: "12px",
     fontWeight: 800,
     lineHeight: 1.05,
-    maxWidth: "1000px",
+    maxWidth: "760px",
     textShadow: "0 8px 26px rgba(11,40,90,0.18)",
-    letterSpacing: "-.6px",
+    letterSpacing: "0",
   },
 
   subtitle: {
-    fontSize: "20px",
+    fontSize: "clamp(18px, 2vw, 24px)",
     opacity: 0.95,
     marginTop: "6px",
     fontWeight: 500,
     marginBottom: "8px",
+    maxWidth: "560px",
   },
 
 
   shopBtn: {
     marginTop: "30px",
-    padding: "14px 36px",
-    background: "#fb641b",
+    padding: "16px 30px",
+    background: "var(--cta)",
     color: "#fff",
     border: "none",
     cursor: "pointer",
-    borderRadius: "10px",
+    borderRadius: "999px",
     fontSize: "18px",
     fontWeight: 800,
     boxShadow: "0 8px 24px rgba(91, 39, 8, 0.18)",
@@ -234,7 +237,7 @@ const styles = {
   },
 
   section: {
-    padding: "40px",
+    padding: "58px clamp(20px, 5vw, 64px)",
   },
 
   categories: {

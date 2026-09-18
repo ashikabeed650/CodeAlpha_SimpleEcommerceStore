@@ -155,6 +155,73 @@ code {
   box-shadow: var(--shadow);
 }
 
+.home-hero {
+  isolation: isolate;
+  overflow: hidden;
+  animation: hero-arrive 900ms ease-out both;
+}
+
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, .13) 48%, transparent 74%);
+  transform: translateX(-100%);
+  animation: hero-sheen 1.4s ease-out 500ms both;
+  pointer-events: none;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  animation: copy-rise 850ms cubic-bezier(.2, .8, .2, 1) 120ms both;
+}
+
+.home-stats .stat-card {
+  animation: stat-rise 700ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.home-stats .stat-card-1 { animation-delay: 120ms; }
+.home-stats .stat-card-2 { animation-delay: 210ms; }
+.home-stats .stat-card-3 { animation-delay: 300ms; }
+.home-stats .stat-card-4 { animation-delay: 390ms; }
+
+.home-section {
+  animation: section-reveal 800ms ease-out both;
+}
+
+.home-section:nth-of-type(2) { animation-delay: 140ms; }
+.home-section:nth-of-type(3) { animation-delay: 220ms; }
+.home-section:nth-of-type(4) { animation-delay: 300ms; }
+
+.home-footer {
+  background: linear-gradient(135deg, #10213e, #173765);
+}
+
+@keyframes hero-arrive {
+  from { opacity: 0; background-position: 58% center; }
+  to { opacity: 1; background-position: center; }
+}
+
+@keyframes hero-sheen {
+  to { transform: translateX(100%); }
+}
+
+@keyframes copy-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stat-rise {
+  from { opacity: 0; transform: translateY(24px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes section-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Slight stagger for stat cards already using .stat-card */
 .stat-card {
   animation: stat-pop 700ms cubic-bezier(.2,.9,.2,1) both;
@@ -167,8 +234,22 @@ code {
 
 /* Reduce motion support */
 @media (prefers-reduced-motion: reduce) {
-  .hero-banner, .hero-title, .hero-subtitle, .cta-btn, .category-card, .stat-card {
+  .hero-banner, .hero-title, .hero-subtitle, .cta-btn, .category-card, .stat-card,
+  .home-hero, .hero-copy, .home-section {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero {
+    min-height: 500px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    background-position: 62% center !important;
+  }
+
+  .home-hero .hero-copy {
+    max-width: 100%;
   }
 }
