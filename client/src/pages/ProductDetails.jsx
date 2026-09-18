@@ -63,7 +63,7 @@ function ProductDetails() {
         </div>
 
         <div style={styles.info}>
-          <h1>{product.name}</h1>
+          <h1 style={styles.title}>{product.name}</h1>
 
           <p style={styles.brand}>
             Brand: {product.brand}
@@ -104,30 +104,43 @@ function ProductDetails() {
 
 const styles = {
   container: {
+    maxWidth: "1180px",
+    margin: "0 auto",
     display: "flex",
-    gap: "32px",
-    padding: "32px",
-    background: "transparent",
+    gap: "24px",
+    padding: "40px 24px 24px",
+    background: "var(--bg)",
     flexWrap: "wrap",
   },
   imageSection: {
-    flex: "1 1 360px",
+    flex: "1 1 420px",
     background: "var(--card-bg)",
-    padding: "20px",
-    borderRadius: "12px",
+    padding: "28px",
+    borderRadius: "18px",
+    border: "1px solid var(--border)",
+    boxShadow: "0 18px 45px rgba(15, 23, 42, 0.08)",
   },
   image: {
     width: "100%",
-    maxWidth: "480px",
-    height: "420px",
+    maxWidth: "520px",
+    height: "470px",
     objectFit: "contain",
   },
   info: {
-    flex: "1 1 420px",
+    flex: "1 1 460px",
     background: "var(--card-bg)",
-    padding: "22px",
-    borderRadius: "12px",
+    padding: "38px",
+    borderRadius: "18px",
+    border: "1px solid var(--border)",
+    boxShadow: "0 18px 45px rgba(15, 23, 42, 0.08)",
     textAlign: "left",
+  },
+  title: {
+    color: "var(--text-h)",
+    fontSize: "clamp(30px, 4vw, 48px)",
+    lineHeight: "1.08",
+    margin: "0 0 18px",
+    letterSpacing: "0",
   },
   brand: {
     color: "#666",
@@ -135,7 +148,11 @@ const styles = {
     fontSize: "14px",
   },
   rating: {
-    color: "#0f9d58",
+    display: "inline-block",
+    color: "#087f5b",
+    background: "#e8f7f0",
+    borderRadius: "999px",
+    padding: "7px 12px",
     margin: "14px 0",
     fontWeight: "700",
   },
@@ -143,10 +160,10 @@ const styles = {
     display: "flex",
     gap: "12px",
     alignItems: "baseline",
-    marginBottom: "16px",
+    margin: "20px 0 24px",
   },
   price: {
-    fontSize: "28px",
+    fontSize: "36px",
     fontWeight: "800",
     color: "var(--primary)",
   },
@@ -160,12 +177,14 @@ const styles = {
     fontWeight: "700",
   },
   stock: {
-    color: "#4caf50",
-    marginBottom: "16px",
+    color: "#16803c",
+    fontWeight: "700",
+    marginBottom: "28px",
   },
   desc: {
     lineHeight: "1.8",
-    color: "#555",
+    color: "var(--muted)",
+    fontSize: "17px",
   },
   cartBtn: {
     width: "100%",
@@ -173,9 +192,9 @@ const styles = {
     background: "linear-gradient(90deg, var(--cta), var(--accent))",
     color: "#fff",
     border: "none",
-    marginTop: "18px",
+    marginTop: "24px",
     cursor: "pointer",
-    borderRadius: "8px",
+    borderRadius: "10px",
     fontWeight: "700",
   },
   buyBtn: {
@@ -186,7 +205,7 @@ const styles = {
     border: "2px solid var(--primary)",
     marginTop: "10px",
     cursor: "pointer",
-    borderRadius: "8px",
+    borderRadius: "10px",
     fontWeight: "700",
   },
   notFound: {
