@@ -9,10 +9,10 @@ function Navbar() {
   const navigate = useNavigate();
 
   // read user from localStorage if present
-  let user = null;
+  let user;
   try {
     user = JSON.parse(localStorage.getItem("user") || "null");
-  } catch (e) {
+  } catch {
     user = null;
   }
 

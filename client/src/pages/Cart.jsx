@@ -1,8 +1,7 @@
-﻿import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import api from "../api/api";
-import { API_ORIGIN } from "../api/api";
+import api, { API_ORIGIN } from "../api/api";
 
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
@@ -25,10 +24,14 @@ function MapSelector({ position, setPosition, setAddress }) {
 
       // reverse geocode with Nominatim
       fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`,
-        { headers: { "User-Agent": "ShopEasy/1.0 (your-email@example.com)" } }
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
       )
-        .then((r) => r.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Address lookup failed.");
+          }
+          return response.json();
+        })
         .then((data) => {
           setAddress(data.display_name || "");
         })
@@ -99,11 +102,7 @@ function Cart() {
         },
       };
 
-      await api.post("/orders", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.post("/orders", payload);
 
       alert("🎉 Order Placed Successfully!");
 
@@ -170,8 +169,14 @@ function Cart() {
                   </span>
 
                   <button
-                    style={styles.qtyBtn}
+                    style={{
+                      ...styles.qtyBtn,
+                      ...(item.quantity >= item.stock
+                        ? styles.disabledQtyBtn
+                        : {}),
+                    }}
                     onClick={() => increaseQuantity(item._id)}
+                    disabled={item.quantity >= item.stock}
                   >
                     +
                   </button>
@@ -342,6 +347,11 @@ const styles = {
     color: "white",
     fontSize: "18px",
     cursor: "pointer",
+  },
+
+  disabledQtyBtn: {
+    cursor: "not-allowed",
+    opacity: 0.5,
   },
 
   qtyValue: {

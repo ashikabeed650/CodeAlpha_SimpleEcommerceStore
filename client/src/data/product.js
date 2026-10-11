@@ -1,8 +1,3 @@
-image: "/images/headphones.jpg"
-image: "/images/smartwatch.jpg"
-image: "/images/mouse.jpg"
-image: "/images/speaker.jpg"
-
 const products = [
   {
     id: 1,

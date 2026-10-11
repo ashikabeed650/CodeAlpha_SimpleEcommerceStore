@@ -16,15 +16,8 @@ function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-      // store user info for convenience (excluding password if present)
       if (res.data.user) {
-        try {
-          const userCopy = { ...res.data.user };
-          delete userCopy.password;
-          localStorage.setItem("user", JSON.stringify(userCopy));
-        } catch (e) {
-          // ignore
-        }
+        localStorage.setItem("user", JSON.stringify(res.data.user));
       }
 
       alert("Login Successful ✅");
@@ -75,12 +68,6 @@ function Login() {
           onClick={handleLogin}
         >
           Login
-        </button>
-
-        <p style={styles.or}>OR</p>
-
-        <button style={styles.otpBtn}>
-          Request OTP
         </button>
 
         <p style={styles.signup}>

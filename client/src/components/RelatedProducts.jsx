@@ -4,20 +4,41 @@ import ProductCard from "./ProductCard";
 
 function RelatedProducts({ currentProductId }) {
   const [products, setProducts] = useState([]);
+  const [loadFailed, setLoadFailed] = useState(false);
 
   useEffect(() => {
+    let active = true;
     const fetchProducts = async () => {
-      const res = await api.get("/products");
+      try {
+        const res = await api.get("/products");
 
-      setProducts(
-        res.data
-          .filter((p) => p._id !== currentProductId)
-          .slice(0, 3)
-      );
+        if (active && Array.isArray(res.data)) {
+          setProducts(
+            res.data
+              .filter((product) => product._id !== currentProductId)
+              .slice(0, 3)
+          );
+        }
+      } catch {
+        if (active) setLoadFailed(true);
+      }
     };
 
     fetchProducts();
+    return () => {
+      active = false;
+    };
   }, [currentProductId]);
+
+  if (loadFailed) {
+    return (
+      <div style={styles.container} role="alert">
+        <h2 style={styles.heading}>Related products are unavailable.</h2>
+      </div>
+    );
+  }
+
+  if (products.length === 0) return null;
 
   return (
     <div style={styles.container}>

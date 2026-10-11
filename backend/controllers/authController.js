@@ -5,7 +5,16 @@ import jwt from "jsonwebtoken";
 // Register User
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const body = req.body || {};
+    const name = body.name?.trim();
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password;
+
+    if (!name || !email || typeof password !== "string" || password.length < 8) {
+      return res.status(400).json({
+        message: "Name, a valid email, and a password of at least 8 characters are required.",
+      });
+    }
 
     const userExists = await User.findOne({ email });
 
@@ -25,7 +34,11 @@ export const registerUser = async (req, res) => {
 
     res.status(201).json({
       message: "Registration Successful",
-      user,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.status(500).json({
@@ -37,7 +50,15 @@ export const registerUser = async (req, res) => {
 // Login User
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const body = req.body || {};
+    const email = body.email?.trim().toLowerCase();
+    const password = body.password;
+
+    if (!email || typeof password !== "string") {
+      return res.status(400).json({
+        message: "Email and password are required.",
+      });
+    }
 
     const user = await User.findOne({ email });
 
@@ -58,6 +79,12 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(503).json({
+        message: "Authentication is not configured on the server.",
+      });
+    }
+
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
@@ -69,7 +96,11 @@ export const loginUser = async (req, res) => {
     res.json({
       message: "Login Successful",
       token,
-      user,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.status(500).json({

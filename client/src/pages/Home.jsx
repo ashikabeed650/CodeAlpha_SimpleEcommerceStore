@@ -6,18 +6,34 @@ import "../components/Stats.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [loadError, setLoadError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
     const fetchProducts = async () => {
       try {
         const res = await api.get("/products");
-        setProducts(res.data);
+        if (!Array.isArray(res.data)) {
+          throw new Error("The product API returned an invalid response.");
+        }
+        if (active) setProducts(res.data);
       } catch (error) {
-        console.log(error);
+        if (active) {
+          setLoadError(
+            error.response?.data?.message ||
+              "Unable to load products. Check the backend URL and database connection."
+          );
+        }
+      } finally {
+        if (active) setLoading(false);
       }
     };
 
     fetchProducts();
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -42,23 +58,25 @@ function Home() {
       {/* Stats */}
       <section className="stats-section home-stats">
         <div className="stat-card stat-card-1">
-          <h2 className="stat-number">500+</h2>
+          <h2 className="stat-number">{products.length}</h2>
           <p className="stat-label">Products</p>
         </div>
 
         <div className="stat-card stat-card-2">
-          <h2 className="stat-number">10K+</h2>
-          <p className="stat-label">Happy Customers</p>
+          <h2 className="stat-number">
+            {new Set(products.map((product) => product.category)).size}
+          </h2>
+          <p className="stat-label">Categories</p>
         </div>
 
         <div className="stat-card stat-card-3">
-          <h2 className="stat-number">24/7</h2>
-          <p className="stat-label">Support</p>
+          <h2 className="stat-number">Free</h2>
+          <p className="stat-label">Delivery</p>
         </div>
 
         <div className="stat-card stat-card-4">
-          <h2 className="stat-number">100%</h2>
-          <p className="stat-label">Secure Payment</p>
+          <h2 className="stat-number">API</h2>
+          <p className="stat-label">Order Placement</p>
         </div>
       </section>
 
@@ -93,6 +111,13 @@ function Home() {
       <section style={styles.section} className="home-section">
         <h2>Featured Products</h2>
 
+        {loadError ? (
+          <p role="alert">{loadError}</p>
+        ) : loading ? (
+          <p>Loading products...</p>
+        ) : products.length === 0 ? (
+          <p>No products are available yet. Seed the backend catalog to display products.</p>
+        ) : (
         <div style={styles.grid}>
           {products.slice(0, 4).map((product) => (
             <ProductCard
@@ -101,6 +126,7 @@ function Home() {
             />
           ))}
         </div>
+        )}
       </section>
 
       {/* Deals */}
@@ -138,8 +164,8 @@ function Home() {
 
           <div style={styles.feature}>
             🔒
-            <h3>Secure Payment</h3>
-            <p>100% Safe Transactions.</p>
+            <h3>Secure Login</h3>
+            <p>Passwords are stored securely.</p>
           </div>
 
           <div style={styles.feature}>

@@ -32,6 +32,16 @@ app.get("/", (req, res) => {
   res.send("🚀 ShopEasy Backend Running Successfully");
 });
 
+// Wait for MongoDB before handling API requests in serverless environments.
+app.use(async (_req, _res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
@@ -42,13 +52,27 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 
+app.use((error, _req, res, _next) => {
+  console.error("API request failed:", error.message);
+  res.status(503).json({
+    message: "The backend database is unavailable. Check the server configuration and try again.",
+  });
+});
+
 // Start the server everywhere except when Vercel imports the app as a function.
 if (!process.env.VERCEL) {
   const PORT = process.env.PORT || 5000;
 
-  app.listen(PORT, () => {
-    console.log(`✅ Server Running on Port ${PORT}`);
-  });
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`✅ Server Running on Port ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error("❌ MongoDB Connection Failed:", error.message);
+      process.exitCode = 1;
+    });
 }
 
 export default app;

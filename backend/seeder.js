@@ -7,22 +7,35 @@ import products from "./data/products.js";
 
 dotenv.config();
 
-connectDB();
-
 const importData = async () => {
   try {
-    await Product.deleteMany();
+    await connectDB();
 
-    await Product.insertMany(products);
+    const result = await Product.bulkWrite(
+      products.map((product) => {
+        const { image, ...productFields } = product;
+        return {
+          updateOne: {
+            filter: { name: product.name },
+            update: {
+              $set: { image },
+              $setOnInsert: productFields,
+            },
+            upsert: true,
+          },
+        };
+      })
+    );
 
-    console.log("✅ Products Imported Successfully");
-
-    process.exit();
+    console.log(
+      `✅ Product seed complete (${result.upsertedCount} new products added).`
+    );
   } catch (error) {
-    console.error(error);
-
-    process.exit(1);
+    console.error("❌ Product seed failed:", error.message);
+    process.exitCode = 1;
+  } finally {
+    await mongoose.disconnect();
   }
 };
 
-importData();
+await importData();

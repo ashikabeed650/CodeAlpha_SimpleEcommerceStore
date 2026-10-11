@@ -3,9 +3,14 @@ import { useCart } from "../context/CartContext";
 import { API_ORIGIN } from "../api/api";
 
 function ProductCard({ product }) {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+  const quantityInCart =
+    cart.find((item) => item._id === product._id)?.quantity || 0;
+  const stock = Number.isInteger(product.stock) ? product.stock : 0;
+  const canAddToCart = stock > quantityInCart;
 
   const handleAddToCart = () => {
+    if (!canAddToCart) return;
     addToCart(product);
     alert(`${product.name} added to cart!`);
   };
@@ -49,10 +54,14 @@ function ProductCard({ product }) {
       <p style={styles.delivery}>✓ Free Delivery</p>
 
       <button
-        style={styles.button}
+        style={{
+          ...styles.button,
+          ...(canAddToCart ? {} : styles.disabledButton),
+        }}
         onClick={handleAddToCart}
+        disabled={!canAddToCart}
       >
-        Add to Cart
+        {stock === 0 ? "Out of Stock" : canAddToCart ? "Add to Cart" : "Stock Limit Reached"}
       </button>
     </div>
   );
@@ -146,6 +155,11 @@ const styles = {
     cursor: "pointer",
     fontSize: "15px",
     fontWeight: "700",
+  },
+
+  disabledButton: {
+    cursor: "not-allowed",
+    opacity: 0.6,
   },
 };
 

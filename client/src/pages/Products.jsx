@@ -1,28 +1,43 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import api from "../api/api";
 import ProductCard from "../components/ProductCard";
 import { useSearch } from "../context/SearchContext";
 
 function Products() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const { search, setSearch } = useSearch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get("category") || "";
 
   useEffect(() => {
+    let active = true;
     const fetchProducts = async () => {
       try {
         const res = await api.get("/products");
-        setProducts(res.data);
+        if (!Array.isArray(res.data)) {
+          throw new Error("The product API returned an invalid response.");
+        }
+        if (active) setProducts(res.data);
       } catch (error) {
-        console.log(error);
+        if (active) {
+          setError(
+            error.response?.data?.message ||
+              "Unable to load products. Check the backend URL and database connection."
+          );
+        }
+      } finally {
+        if (active) setLoading(false);
       }
     };
 
     fetchProducts();
+    return () => {
+      active = false;
+    };
   }, []);
-
-  // read category from query param if present
-  const urlParams = new URLSearchParams(window.location.search);
-  const categoryParam = urlParams.get("category") || "";
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
@@ -42,6 +57,20 @@ function Products() {
     <div style={styles.container}>
       <h1 style={styles.heading}>Explore Products</h1>
 
+      {loading ? (
+        <p style={styles.count}>Loading products...</p>
+      ) : error ? (
+        <div style={styles.notFound} role="alert">
+          <h2>Products are unavailable</h2>
+          <p>{error}</p>
+        </div>
+      ) : products.length === 0 ? (
+        <div style={styles.notFound}>
+          <h2>No products have been added yet</h2>
+          <p>Seed the backend catalog to make products available.</p>
+        </div>
+      ) : (
+        <>
       <p style={styles.count}>
         {filteredProducts.length} Product
         {filteredProducts.length !== 1 && "s"} Found
@@ -73,11 +102,16 @@ function Products() {
 
           <button
             style={styles.button}
-            onClick={() => setSearch("")}
+            onClick={() => {
+              setSearch("");
+              setSearchParams({});
+            }}
           >
-            Clear Search
+            Clear Filters
           </button>
         </div>
+      )}
+        </>
       )}
     </div>
   );

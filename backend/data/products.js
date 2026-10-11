@@ -5,7 +5,7 @@ const products = [
     brand: "Samsung",
     category: "Mobiles",
     description: "Compact flagship with great camera and display.",
-    image: "/images/headphones.jpg", // placeholder image; replace with mobile image
+    image: "/images/mobiles-1.jpg",
     price: 25999,
     originalPrice: 29999,
     discount: 13,
@@ -18,7 +18,7 @@ const products = [
     brand: "Google",
     category: "Mobiles",
     description: "Clean Android experience with excellent low-light camera.",
-    image: "/images/speaker.jpg", // placeholder image; replace with mobile image
+    image: "/images/mobiles-2.jpg",
     price: 27999,
     originalPrice: 31999,
     discount: 12,

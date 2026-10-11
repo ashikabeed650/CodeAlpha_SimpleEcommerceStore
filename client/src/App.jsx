@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 
 import Home from "./pages/Home";
@@ -21,6 +21,15 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route
+          path="*"
+          element={
+            <div style={{ padding: "64px 24px", textAlign: "center" }}>
+              <h1>Page not found</h1>
+              <Link to="/">Return to ShopEasy</Link>
+            </div>
+          }
+        />
       </Route>
     </Routes>
   );

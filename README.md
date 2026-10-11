@@ -95,8 +95,11 @@ git clone https://github.com/ashikabeed650/CodeAlpha_SimpleEcommerceStore.git
 ```bash
 cd backend
 npm install
+npm run seed
 npm run dev
 ```
+
+Before seeding, copy `backend/.env.example` to `backend/.env` and set `MONGO_URI` and `JWT_SECRET`. The seed command adds missing sample products and does not delete existing products.
 
 ### Frontend Setup
 
@@ -105,6 +108,8 @@ cd client
 npm install
 npm run dev
 ```
+
+For local frontend development, copy `client/.env.example` to `client/.env` and set `VITE_API_URL=http://localhost:5000/api`.
 
 ---
 
@@ -126,8 +131,8 @@ npm run dev
 
 ### Authentication
 
-- POST `/api/users/register`
-- POST `/api/users/login`
+- POST `/api/auth/register`
+- POST `/api/auth/login`
 
 ### Products
 
@@ -173,6 +178,29 @@ I would like to thank **CodeAlpha** for providing this opportunity to build a re
 
 ---
 
+## 🚀 Deploying to Vercel
+
+The frontend and backend are separate Vercel projects in this repository. Deploy the backend first, then configure the frontend to use its URL.
+
+### 1. Prepare MongoDB and seed products
+
+Create a MongoDB database and allow connections from your hosting environment. Copy `backend/.env.example` to `backend/.env`, enter the MongoDB connection string and a long, private JWT secret, then run `npm run seed` from the `backend` directory. Never commit `.env` or enter backend secrets in the frontend project.
+
+### 2. Deploy the backend
+
+- Import the repository as a new Vercel project and set **Root Directory** to `backend`.
+- Add `MONGO_URI` and `JWT_SECRET` under the backend project's **Settings → Environment Variables**.
+- Deploy. The backend's `vercel.json` configures the API function and includes the product images.
+- Verify the deployment root responds, and that `/api/products` returns the seeded products.
+
+### 3. Deploy the frontend
+
+- Import the same repository as a second Vercel project and set **Root Directory** to `client`.
+- Add `VITE_API_URL` under **Settings → Environment Variables**, set to the backend deployment URL followed by `/api` (for example, `https://your-backend-project.vercel.app/api`).
+- Deploy. The client Vercel rewrite supports direct visits and refreshes on routes such as `/products` and `/cart`.
+
+`VITE_API_URL` is required for production builds. If the frontend build reports it missing, add it to the frontend project's Vercel environment variables and redeploy. If the product API returns a database error, check the backend project's `MONGO_URI` and MongoDB network access.
+
 ## 📝 Recent updates
 
 - Added entrance and hover animations to the Home hero, CTA and category cards (CSS keyframes in client/src/index.css).
@@ -184,4 +212,3 @@ I would like to thank **CodeAlpha** for providing this opportunity to build a re
 Notes:
 - The API client now appends Authorization: Bearer <token> from localStorage. If you prefer explicit header control per-call, revert the interceptor in client/src/api/api.js.
 - Pushing to remote requires proper git remote and permissions; see below for commit/push status.
-
